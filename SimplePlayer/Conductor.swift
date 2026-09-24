@@ -73,16 +73,15 @@ class Conductor {
         let gotAccess = url.startAccessingSecurityScopedResource()
         if !gotAccess { return }
         
-        if selectedDirectory != nil {
-            selectedDirectory?.stopAccessingSecurityScopedResource()
-            selectedDirectory = nil
-        }
-        
+        selectedDirectory?.stopAccessingSecurityScopedResource()
+        selectedDirectory = nil
+
         do {
             let data = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
-            
+
             UserDefaults.standard.set(data, forKey: "LastPickedFolder")
         } catch {
+            url.stopAccessingSecurityScopedResource()
             bootError = ConductorError.couldNotSaveBookmark
             return
         }
