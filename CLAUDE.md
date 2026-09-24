@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A tiny sandboxed macOS SwiftUI app ("Local Projector") that plays every `.mov` / `.m4v` in a user-chosen folder, shuffled, on an endless loop. Intended for unattended display (kiosk/projector use). macOS 15.0+, Swift 5, no third-party dependencies.
+A tiny sandboxed macOS SwiftUI app ("Local Projector") that plays every `.mov` / `.mp4` / `.m4v` in a user-chosen folder, shuffled, on an endless loop. Intended for unattended display (kiosk/projector use). macOS 15.0+, Swift 5, no third-party dependencies.
 
 ## Naming (easy to trip over)
 
