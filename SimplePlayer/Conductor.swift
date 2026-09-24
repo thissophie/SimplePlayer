@@ -36,6 +36,7 @@ class Conductor {
         
         items = []
         booted = false
+        bootError = nil
     }
     
     func retrieveSelectedDirectoryOrClear() {
@@ -67,6 +68,8 @@ class Conductor {
     }
     
     func selectNewFolder(_ url: URL) {
+        bootError = nil
+        
         let gotAccess = url.startAccessingSecurityScopedResource()
         if !gotAccess { return }
         
