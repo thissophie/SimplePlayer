@@ -82,6 +82,7 @@ class Conductor {
             UserDefaults.standard.set(data, forKey: "LastPickedFolder")
         } catch {
             url.stopAccessingSecurityScopedResource()
+            booted = true
             bootError = ConductorError.couldNotSaveBookmark
             return
         }
