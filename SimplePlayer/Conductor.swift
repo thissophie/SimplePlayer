@@ -29,10 +29,7 @@ class Conductor {
     var bootError: ConductorError?
     
     func clear() {
-        if selectedDirectory != nil {
-            selectedDirectory?.stopAccessingSecurityScopedResource()
-            selectedDirectory = nil
-        }
+        selectedDirectory?.stopAccessingSecurityScopedResource()
         selectedDirectory = nil
         
         UserDefaults.standard.removeObject(forKey: "LastPickedFolder")
