@@ -97,11 +97,12 @@ class Conductor {
         do {
             loading = true
             guard let selectedDirectory else { throw Error.noSelectedDirectory }
-            // Find all mov or mp4 files within the directory url
-       
+            // Find all mov, mp4 or m4v files within the directory url
+            let videoExtensions: Set<String> = ["mov", "mp4", "m4v"]
+
             let files = try FileManager.default.contentsOfDirectory(at: selectedDirectory, includingPropertiesForKeys: nil, options: [])
                 .filter { url in
-                    return url.pathExtension.lowercased() == "mov" ||                 url.pathExtension.lowercased() == "m4v"
+                    return videoExtensions.contains(url.pathExtension.lowercased())
                 }
             
             for file in files {
