@@ -25,7 +25,7 @@ The project uses Xcode 16 file-system-synchronized groups (`objectVersion = 77`)
 
 Three pieces, wired together in `ContentView`:
 
-- **`Conductor`** (`@Observable`, held as `@State` in `ContentView`) owns all state: the selected folder, the list of video URLs, and `booted` / `loading` / `bootError` flags that drive which UI `ContentView` shows. It also defines a module-level `enum Error` (shadows `Swift.Error` inside the module — reference the protocol as `Swift.Error`).
+- **`Conductor`** (`@Observable`, held as `@State` in `ContentView`) owns all state: the selected folder, the list of video URLs, and `booted` / `loading` / `bootError` flags that drive which UI `ContentView` shows. Its failure cases live in `enum ConductorError`.
 - **Folder persistence via security-scoped bookmarks.** Because the app is sandboxed, access to the picked folder is persisted as a `.withSecurityScope` bookmark in `UserDefaults` under the key `LastPickedFolder`, and restored on `onAppear`. Any code that swaps or clears the folder must balance `startAccessingSecurityScopedResource()` / `stopAccessingSecurityScopedResource()`. Folder scanning is non-recursive and extension-filtered in `refreshItemsFromSelectedDirectory()`.
 - **`VideoPlayerView`** wraps an `AVQueuePlayer`. It shuffles and enqueues all URLs; when observing `currentItem` shows the queue has drained, it refills it — this is how the endless loop works. It also re-populates whenever `urls` changes.
 
