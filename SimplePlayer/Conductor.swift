@@ -8,7 +8,7 @@
 import Foundation
 
 // BootFailed error
-enum Error: Swift.Error {
+enum ConductorError: Error {
     case bootFailed
     case couldNotSaveBookmark
     case couldNotAccessSecurityScopedResource(String)
@@ -26,7 +26,7 @@ class Conductor {
     
     var items: [URL] = []
     
-    var bootError: Error?
+    var bootError: ConductorError?
     
     func clear() {
         if selectedDirectory != nil {
@@ -61,7 +61,7 @@ class Conductor {
                              bookmarkDataIsStale: &isStale)
           
         guard newUrl.startAccessingSecurityScopedResource() else {
-            throw Error.couldNotAccessSecurityScopedResource(newUrl.path())
+            throw ConductorError.couldNotAccessSecurityScopedResource(newUrl.path())
         }
         
         selectedDirectory = newUrl
@@ -83,7 +83,7 @@ class Conductor {
             
             UserDefaults.standard.set(data, forKey: "LastPickedFolder")
         } catch {
-            bootError = Error.couldNotSaveBookmark
+            bootError = ConductorError.couldNotSaveBookmark
             return
         }
         
@@ -96,7 +96,7 @@ class Conductor {
         booted = true
         do {
             loading = true
-            guard let selectedDirectory else { throw Error.noSelectedDirectory }
+            guard let selectedDirectory else { throw ConductorError.noSelectedDirectory }
             // Find all mov, mp4 or m4v files within the directory url
             let videoExtensions: Set<String> = ["mov", "mp4", "m4v"]
 
@@ -112,7 +112,7 @@ class Conductor {
             items = files
         } catch {
             print("Refresh items failed: \(error)")
-            bootError = Error.bootFailed
+            bootError = ConductorError.bootFailed
         }
         loading = false
     }
